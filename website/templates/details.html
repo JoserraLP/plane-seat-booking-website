@@ -11,30 +11,42 @@
     {% endwith %}
     {% if details %}
     <div class="container">
-        <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
-            <form method="POST" action="/book_seats" class="justify-content-center">
-                <div class="form-group row">
-                    <label class="col-4 text-left mt-1" for="name">Name:</label>
-                    <input class="col-8 text-left" type="name" name="details" placeholder="Name" autofocus="" required>
-                </div>
+        <div class="row mt-5">
+            <div class="col">
+                <h1>Purchase details</h1>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
+                <form method="POST" action="/book_seats" class="justify-content-center">
+                    <div class="form-group row">
+                        <label class="col-4 text-left mt-1" for="name">Client name:</label>
+                        <input class="col-8 text-left" type="name" name="details" placeholder="Name" autofocus="" required>
+                    </div>
 
-                <div class="form-group row">
-                    <p class="col-4 text-left mt-1">Plane: {{details['name']}}</p>
-                </div>
-                <div class="form-group row">
-                    <p class="col-4 text-left mt-1">Day: {{details['day']}}</p>
-                </div>
-                <div class="form-group row">
-                    <p class="col-4 text-left mt-1">Hour: {{details['hour']}}</p>
-                </div>
-                <div class="form-group row">
-                    <p class="col-4 text-left mt-1">Seats: {{details['seats']}}</p>
-                </div>
-                <div class="form-group row">
-                    <p class="col-4 text-left mt-1">Total price: {{details['price']}}</p>
-                </div>
-                <button class="btn btn-dark" type="submit">Confirm purchase</button>
-            </form>
+                    <div class="form-group row">
+                        <p class="col-4 text-left mt-1">Plane: </p>
+                        <p class="col-8 text-left mt-1">{{details['name']}}</p>
+                    </div>
+                    <div class="form-group row">
+                        <p class="col-4 text-left mt-1">Day:</p>
+                        <p class="col-8 text-left mt-1">{{details['day']}}</p>
+                    </div>
+                    <div class="form-group row">
+                        <p class="col-4 text-left mt-1">Hour:</p>
+                        <p class="col-8 text-left mt-1">{{details['hour']}}</p>
+                    </div>
+                    <div class="form-group row">
+                        <p class="col-4 text-left mt-1">Seats: </p>
+                        <p class="col-4 text-left mt-1">{{details['seats']}}</p>
+                    </div>
+                    <div class="form-group row">
+                        <p class="col-4 text-left mt-1">Total price: </p>
+                        <p class="col-8 text-left mt-1">{{details['price']}}</p>
+                    </div>
+                    <button class="btn btn-dark" type="submit">Confirm purchase</button>
+                </form>
+            </div>
         </div>
     </div>
     {% endif %}

@@ -56,7 +56,7 @@ def book_details():
         selected_seats = ['seat_'+item for item in selected_plane['seats'].keys() if item in selected_results['plane_seats']]
 
         details = dict()
-        details['seats'] = selected_seats
+        details['seats'] = [item.split('_')[-1] for item in selected_seats]
         details['name'] = selected_plane['name']
         details['day'] = selected_plane['days']
         details['hour'] = selected_plane['hour']

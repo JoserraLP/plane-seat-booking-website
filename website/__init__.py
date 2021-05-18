@@ -13,7 +13,9 @@ from static import constants
 db = SQLAlchemy()
 
 # Create Redlock instance
-redlock = Redlock([{"host": constants.REDLOCK_HOST, "port": constants.REDLOCK_PORT, "db": constants.REDLOCK_DB, "password": constants.REDIS_PASSWORD}, ])
+redlock = Redlock([{"host": constants.REDLOCK_HOST, "port": constants.REDLOCK_PORT, "db": constants.REDLOCK_DB, "password": constants.REDIS_PASSWORD},])
+
+# Included all the replicas but they are only read
 
 # Create a Redis instance
 redis = RedisDB(host=constants.REDIS_HOST, port=constants.REDIS_PORT, db=constants.REDIS_DB)
