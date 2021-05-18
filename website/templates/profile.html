@@ -6,4 +6,23 @@
     Welcome, {{name}}!
   </p>
 </div>
+<div class="p-2 mt-5">
+  <div class="row p-2">
+      <div class="col">
+      <p class="h3">Advanced actions</p>
+          </div>
+  </div>
+    <div class="row p-2 mt-5">
+        <div class="col">
+       <form action="{{url_for('admin.fill_db')}}" method="POST">
+          <input class="btn btn-dark" type="submit" value="Fill Redis DB with data">
+       </form>
+        </div>
+        <div class="col">
+      <form action="{{url_for('admin.flush_db')}}" method="POST">
+          <input class="btn btn-dark" type="submit" value="Flush Redis DB">
+       </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

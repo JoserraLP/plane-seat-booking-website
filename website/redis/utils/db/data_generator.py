@@ -14,7 +14,8 @@ class DataGenerator:
                     "from": "Badajoz",
                     "to": "Barcelona",
                     "days": "Tuesday",
-                    "hour": "7:00"
+                    "hour": "7:00",
+                    "price": 32
                 },
             f"planes:1":
                 {
@@ -25,7 +26,8 @@ class DataGenerator:
                     "from": "Badajoz",
                     "to": "Barcelona",
                     "days": "Thursday",
-                    "hour": "7:00"
+                    "hour": "7:00",
+                    "price": 40,
                 }
         }]
 

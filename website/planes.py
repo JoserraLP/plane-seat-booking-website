@@ -11,7 +11,6 @@ planes = Blueprint('planes', __name__)
 
 locks = []
 
-
 # -------------- Planes -------------- #
 @planes.route('/show_planes')
 def show_planes():
@@ -22,6 +21,8 @@ def show_planes():
         Redirect to the statistics page
     """
     try:
+
+        locks = []
 
         planes_data = get_all_planes()
         locks_data = get_all_locks()
@@ -56,10 +57,10 @@ def book_details():
 
         details = dict()
         details['seats'] = selected_seats
-        details['name'] = selected_results['plane_name']
+        details['name'] = selected_plane['name']
         details['day'] = selected_plane['days']
-        # 32 euros per seat
-        details['price'] = 32*len(selected_seats)
+        details['hour'] = selected_plane['hour']
+        details['price'] = float(selected_plane['price'])*len(selected_seats)
 
         for seat in selected_seats:
             resource_seat = selected_plane['name'][-1]+':'+seat
@@ -110,7 +111,7 @@ def get_all_planes():
     for plane_id, plane_values in json_data.items():
         num_seats = plane_values['num_seats']
         total_seats_reserved = [v for k, v in plane_values.items() if 'seat_' in k and v != '' and v != 'locked']
-        json_data[plane_id]['full'] = len(total_seats_reserved) == num_seats
+        json_data[plane_id]['full'] = len(total_seats_reserved) == int(num_seats)
 
         seats = dict()
         for k, v in plane_values.items():

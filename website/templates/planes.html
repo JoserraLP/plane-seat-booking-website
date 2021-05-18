@@ -7,22 +7,29 @@
     {{ messages[0] }}
 </div>
 {% else %}
-<h1>Available planes</h1>
+<div class="row mt-5">
+    <div class="col">
+        <h1>Available planes</h1>
+    </div>
+</div>
 {% if planes %}
 
 {% for item in planes %}
-<div class="row">
+<div class="row mt-2 justify-content-lg-center">
+
     {% if planes[item]['full'] %}
-    <div class="col bg-gray mt-3 mb-3 ml-5 mr-5 p-2">
+    <div class="col col-lg-5 bg-gray mt-3 mb-3 ml-5 mr-5 p-2">
         {% else %}
-        <div class="col bg-light-green mt-3 mb-3 ml-5 mr-5 p-2" data-id="{{planes[item]['name'] }}"
+        <div class="col col-lg-5 bg-light-green mt-3 mb-3 ml-5 mr-5 p-2" data-id="{{planes[item]['name']}}"
              onclick="showSeats(this)">
             {% endif %}
+            <div class="pt-3 text-center h4 font-weight-bold">{{planes[item]['name'] }}</div>
             <div class="row">
-                <div class="pt-3 text-center">{{planes[item]['name'] }}</div>
-                <div class="pt-3 text-center">From: {{planes[item]['from'] }}</div>
-                <div class="pt-3 text-center">To: {{planes[item]['to'] }}</div>
-                <div class="pt-3 text-center">Day: {{planes[item]['days'] }}</div>
+                <div class="col pt-3 text-center">From: {{planes[item]['from'] }}</div>
+                <div class="col pt-3 text-center">To: {{planes[item]['to'] }}</div>
+                <div class="col pt-3 text-center">Day: {{planes[item]['days'] }}</div>
+                <div class="col pt-3 text-center">Hour: {{planes[item]['hour'] }}</div>
+                <div class="col pt-3 text-center">Price/seat: {{planes[item]['price'] }} €</div>
             </div>
         </div>
     </div>
@@ -41,7 +48,7 @@
             <div class="modal-content">
                 <form action="{{url_for('planes.book_details')}}" method="POST">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <h5 id="title" class="modal-title text-center" id="exampleModalLabel">Modal title</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -68,10 +75,9 @@ function showSeats(elem)
   var plane_name = elem.getAttribute("data-id");
   plane_name = "planes:"+plane_name.slice(-1);
   var seats = data[plane_name]['seats'];
-  console.log(data);
 
-    $('.modal-header').empty();
-    $('.modal-header').html(data[plane_name]['name']);
+    var title = document.getElementById('title');
+    title.innerHTML = data[plane_name]['name'];
     $('.modal-body').empty(); // clear the body of any old content
     var container = document.createElement('div');
     container.classList.add('container');
@@ -80,6 +86,7 @@ function showSeats(elem)
     var total_seats = Object.keys(seats).length;
 
     for (var i=0; i < total_seats; i+=4){
+    console.log(i);
         var row = document.createElement('div');
         row.classList.add('row');
         container.appendChild(row);
@@ -87,40 +94,125 @@ function showSeats(elem)
         if (i < total_seats){
             var col_1 = document.createElement('div');
             col_1.className += ('col mt-1 mb-1 ml-2 mr-2');
-            var p = document.createElement('p');
-            p.innerHTML = i;
+            var p_1 = document.createElement('p');
+            p_1.innerHTML = i;
 
-            var input = document.createElement('input');
-            input.type = "checkbox";
-            input.name = "seats";
-            input.value = plane_name + "_" + i;
+            var input_1 = document.createElement('input');
+            input_1.type = "checkbox";
+            input_1.name = "seats";
+            input_1.value = plane_name + "_" + i;
 
             if (seats[i] == "")
                 col_1.className += " bg-light-green";
             else if (seats[i] == "locked") {
                 col_1.className += " bg-warning";
-                input.disabled = true;
+                input_1.disabled = true;
             }else{
                 col_1.className += " bg-gray";
-                input.disabled = true;
+                input_1.disabled = true;
             }
+
+
+            col_1.appendChild(input_1);
+            col_1.appendChild(p_1);
 
             row.appendChild(col_1);
 
-            col_1.appendChild(input);
-            col_1.appendChild(p);
 
         }
 
-        // TODO meter con las 4 columnas, copiar y pegar cambiando el col
+        if (i+1 < total_seats){
+            var col_2 = document.createElement('div');
+            col_2.className += ('col mt-1 mb-1 ml-2 mr-2');
+            var p_2 = document.createElement('p');
+            p_2.innerHTML = i+1;
+
+            var input_2 = document.createElement('input');
+            input_2.type = "checkbox";
+            input_2.name = "seats";
+            input_2.value = plane_name + "_" + (i+1);
+
+            if (seats[i+1] == "")
+                col_2.className += " bg-light-green";
+            else if (seats[i+1] == "locked") {
+                col_2.className += " bg-warning";
+                input_2.disabled = true;
+            }else{
+                col_2.className += " bg-gray";
+                input_2.disabled = true;
+            }
+
+            col_2.appendChild(input_2);
+            col_2.appendChild(p_2);
+
+            row.appendChild(col_2);
+
+        }
+
+        if (i+2 < total_seats){
+            var col_3 = document.createElement('div');
+            col_3.className += ('col mt-1 mb-1 ml-2 mr-2');
+            var p_3 = document.createElement('p');
+            p_3.innerHTML = i+2;
+
+            var input_3 = document.createElement('input');
+            input_3.type = "checkbox";
+            input_3.name = "seats";
+            input_3.value = plane_name + "_" + (i+2);
+
+            if (seats[i+2] == "")
+                col_3.className += " bg-light-green";
+            else if (seats[i+2] == "locked") {
+                col_3.className += " bg-warning";
+                input_3.disabled = true;
+            }else{
+                col_3.className += " bg-gray";
+                input_3.disabled = true;
+            }
+
+            row.appendChild(col_3);
+
+            col_3.appendChild(input_3);
+            col_3.appendChild(p_3);
+
+        }
+
+        if (i+3 < total_seats){
+            var col_4 = document.createElement('div');
+            col_4.className += ('col mt-1 mb-1 ml-2 mr-2');
+            var p_4 = document.createElement('p');
+            p_4.innerHTML = i+3;
+
+            var input_4 = document.createElement('input');
+            input_4.type = "checkbox";
+            input_4.name = "seats";
+            input_4.value = plane_name + "_" + (i+3);
+
+            if (seats[i+3] == "")
+                col_4.className += " bg-light-green";
+            else if (seats[i+3] == "locked") {
+                col_4.className += " bg-warning";
+                input_4.disabled = true;
+            }else{
+                col_4.className += " bg-gray";
+                input_4.disabled = true;
+            }
+
+            col_4.appendChild(input_4);
+            col_4.appendChild(p_4);
+
+            row.appendChild(col_4);
+
+        }
+
+
+
     }
 
     $('.modal-body').append(container);
 
     $('#modal').modal('show');
 }
-
-
 
 
     </script>

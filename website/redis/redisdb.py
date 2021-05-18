@@ -1,11 +1,12 @@
 from datetime import timedelta
 
 import redis
+import website.static.constants as constants
 
 
 class RedisDB:
 
-    def __init__(self, host='localhost', port=6379, db=0, password=None):
+    def __init__(self, host='localhost', port=6379, db=0, password=constants.REDIS_PASSWORD):
 
         # Default db is 0
         self.r = redis.Redis(host=host, port=port, db=db, password=password)

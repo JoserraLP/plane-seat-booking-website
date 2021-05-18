@@ -13,7 +13,7 @@ from static import constants
 db = SQLAlchemy()
 
 # Create Redlock instance
-redlock = Redlock([{"host": constants.REDLOCK_HOST, "port": constants.REDLOCK_PORT, "db": constants.REDLOCK_DB}, ])
+redlock = Redlock([{"host": constants.REDLOCK_HOST, "port": constants.REDLOCK_PORT, "db": constants.REDLOCK_DB, "password": constants.REDIS_PASSWORD}, ])
 
 # Create a Redis instance
 redis = RedisDB(host=constants.REDIS_HOST, port=constants.REDIS_PORT, db=constants.REDIS_DB)
@@ -47,9 +47,13 @@ def create_app():
     from main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
-    # -> Map routes 
+    # -> Planes routes
     from planes import planes as planes_blueprint
     app.register_blueprint(planes_blueprint)
+
+    # -> Admin routes
+    from admin import admin as admin_blueprint
+    app.register_blueprint(admin_blueprint)
 
     # Import models to create the tables
     from models import User, Role
