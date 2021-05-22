@@ -10,9 +10,13 @@
   {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
   {% for category, message in messages %}
+  <div class="row mt-2 justify-content-lg-center">
+    <div class="col col-lg-5 bg-gray mt-3 mb-3 ml-5 mr-5 p-2">
       <div class={{category}}>
           {{ message }}
       </div>
+    </div>
+  </div>
   {% endfor %}
   {% endif %}
   {% endwith %}

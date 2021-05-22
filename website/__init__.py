@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_user import UserManager
 
-from .redis.redisdb import RedisDB
+from website.redis_db.redisdb import RedisDB
 from redlock import Redlock
 
 from config import default
@@ -13,15 +13,30 @@ from static import constants
 db = SQLAlchemy()
 
 # Create Redlock instance
-redlock = Redlock([{"host": constants.REDLOCK_HOST, "port": constants.REDLOCK_PORT, "db": constants.REDLOCK_DB, "password": constants.REDIS_PASSWORD},])
+redlock = Redlock([{"host": constants.REDLOCK_1_HOST, "port": constants.REDLOCK_1_PORT, "db": constants.REDLOCK_DB,
+                    "password": constants.REDIS_PASSWORD},
+                   {"host": constants.REDLOCK_2_HOST, "port": constants.REDLOCK_2_PORT, "db": constants.REDLOCK_DB,
+                    "password": constants.REDIS_PASSWORD},
+                   {"host": constants.REDLOCK_3_HOST, "port": constants.REDLOCK_3_PORT, "db": constants.REDLOCK_DB,
+                    "password": constants.REDIS_PASSWORD},
+                   {"host": constants.REDLOCK_4_HOST, "port": constants.REDLOCK_4_PORT, "db": constants.REDLOCK_DB,
+                    "password": constants.REDIS_PASSWORD},
+                   {"host": constants.REDLOCK_5_HOST, "port": constants.REDLOCK_5_PORT, "db": constants.REDLOCK_DB,
+                    "password": constants.REDIS_PASSWORD}])
 
 # Included all the replicas but they are only read
 
 # Create a Redis instance
 redis = RedisDB(host=constants.REDIS_HOST, port=constants.REDIS_PORT, db=constants.REDIS_DB)
 
-# Create a Redis instance
-redis_lock = RedisDB(host=constants.REDIS_HOST, port=constants.REDIS_PORT, db=constants.REDLOCK_DB)
+# Create a list with the redlock instances
+redlock_dbs = [
+    RedisDB(host=constants.REDLOCK_1_HOST, port=constants.REDLOCK_1_PORT, db=constants.REDLOCK_DB),
+    RedisDB(host=constants.REDLOCK_2_HOST, port=constants.REDLOCK_2_PORT, db=constants.REDLOCK_DB),
+    RedisDB(host=constants.REDLOCK_3_HOST, port=constants.REDLOCK_3_PORT, db=constants.REDLOCK_DB),
+    RedisDB(host=constants.REDLOCK_4_HOST, port=constants.REDLOCK_4_PORT, db=constants.REDLOCK_DB),
+    RedisDB(host=constants.REDLOCK_5_HOST, port=constants.REDLOCK_5_PORT, db=constants.REDLOCK_DB),
+]
 
 
 def create_app():
@@ -56,6 +71,10 @@ def create_app():
     # -> Admin routes
     from admin import admin as admin_blueprint
     app.register_blueprint(admin_blueprint)
+
+    # -> DB info routes
+    from db_info import db_info as db_info_blueprint
+    app.register_blueprint(db_info_blueprint)
 
     # Import models to create the tables
     from models import User, Role

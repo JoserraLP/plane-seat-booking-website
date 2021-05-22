@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="p-2 mt-5">
+    <div class="row p-2">
+        <div class="col">
+            <p class="h3">Select an option</p>
+        </div>
+    </div>
+    <div class="row p-2 mt-5">
+        <div class="col">
+            <form action="{{url_for('db_info.show_db_info')}}" method="GET">
+                <input class="btn btn-dark" type="submit" value="Get DB info">
+            </form>
+        </div>
+        <div class="col">
+            <form action="{{url_for('db_info.show_locks_info')}}" method="GET">
+                <input class="btn btn-dark" type="submit" value="Get locks info">
+            </form>
+        </div>
+    </div>
+    <div class="row p-2 mt-5">
+        <div class="col">
+            <p class="h3">Info</p>
+        </div>
+    </div>
+    <div class="row p-2 mt-5">
+
+        <div class="col">
+            {% if info %}
+            <textarea name="info" rows="5" cols="150" disabled>{{info}}</textarea>
+            {% else %}
+            <textarea name="info" rows="5" cols="150" disabled>There is no info to show</textarea>
+            {% endif %}
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}

@@ -1,4 +1,4 @@
-from website.redis.utils.db.data_generator import DataGenerator
+from website.redis_db.utils.db.data_generator import DataGenerator
 
 from website import redis
 
