@@ -12,7 +12,7 @@ admin = Blueprint('admin', __name__)
 @roles_required(['admin'])
 def fill_db():
     try:
-
+        # Fill database
         fill()
         flash('Successfully filled DB', 'bg-light-green')
         return render_template('index.html')
@@ -28,6 +28,7 @@ def fill_db():
 @roles_required(['admin'])
 def flush_db():
     try:
+        # Flush database
         flush()
         flash('Successfully flushed DB', 'bg-light-green')
         return render_template('index.html')
