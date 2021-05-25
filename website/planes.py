@@ -63,6 +63,9 @@ def book_details():
         details['hour'] = selected_plane['hour']
         details['price'] = float(selected_plane['price']) * len(selected_seats)
 
+        # Clear the locks
+        locks.clear()
+
         # Lock all the seats that are reserved
         for seat in selected_seats:
             resource_seat = selected_plane['name'][-1] + ':' + seat
